@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><title>relay</title>
+<script>
+addEventListener('message',async e=>{const d=e.data; if(!d||d.kind!=='relay-req') return;
+ try{const r=await fetch(d.name,{cache:'no-store'}); const b=await r.arrayBuffer(); e.source.postMessage({kind:'relay',name:d.name,status:r.status,buf:b},'*',[b])}
+ catch(err){e.source.postMessage({kind:'relay',name:d.name,error:String(err)},'*')}});
+parent.postMessage({kind:'relay-ready'},'*');
+</script>
